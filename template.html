@@ -6,7 +6,230 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Evaluate Responses Based on a Given Question and Passage</title>
-    <style>
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8'/>
+
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- HITPUB CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700,700i" rel="stylesheet">
+    <style id="hitpub_css">
+        /***********************************************
+        MOSAIC BOOSTRAP OVERWRITES
+        ***********************************************/
+        #hitinfo .card {
+            border-radius: 0;
+        }
+
+        #hitinfo .card:first-child {
+            border-bottom: 0;
+        }
+
+        #hitinfo button.btn-link {
+            color: #06486F;
+            text-decoration: none;
+        }
+
+        #hitinfo button.btn-link:hover {
+            text-decoration: none;
+        }
+
+        #hit ul.question-choice {
+            list-style-type: none;
+        }
+
+        #hit #mturk_form .card {
+            border: none;
+            background-color: inherit;
+        }
+
+        #hit .accordion .card-header {
+            background-color: #E5E5E5;
+            border: none;
+        }
+
+        #hit .card {
+            border: none;
+        }
+
+        /***********************************************
+        MOSAIC GENERAL STYLING
+        ***********************************************/
+        #hit {
+            background-color: rgba(0, 0, 0, .03);
+            padding-bottom: 4rem;
+        }
+
+        body {
+            font-family: "Open Sans", "Roboto", sans-serif;
+        }
+
+        textarea#feedback {
+            width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        textarea#feedback:focus {
+            outline: none !important;
+            border-color: #85c8ea;
+        }
+
+        input#submitButton {
+            margin: auto;
+            display: block;
+            background-color: #2172a4;
+            color: #fff;
+            font-size: 1.125rem;
+            padding: .5rem 1rem;
+            cursor: pointer;
+            border-radius: 1rem;
+        }
+
+        input#submitButton:hover {
+            background-color: #06486F;
+        }
+
+        div.question-field-group .card-body {
+            padding: 2rem 0 0;
+        }
+
+        div.form-check, div.form-check label, div.form-check input {
+            cursor: pointer;
+        }
+
+        .example {
+            padding: 2rem 0;
+            border-bottom: solid 1px #ccc;
+        }
+
+        div.example:last-child {
+            border-bottom: none;
+        }
+
+        div.question-container {
+            padding: 5rem 0;
+            border-bottom: solid 1px #ccc;
+        }
+
+        div.question-container:first-child {
+            padding: 0 0 5rem;
+        }
+
+        li {
+            margin-top: 0;
+        }
+
+        #instructions li.sub-warning {
+            color: black;
+        }
+
+        #instructions li.good, #examples .good {
+            color: green;
+        }
+
+        #instructions li.bad, #examples .bad {
+            color: darkred;
+        }
+
+        div.question label {
+            font-style: italic;
+        }
+
+        div.question label, input.inline-input, span.prefix {
+            padding: .25rem 0;
+        }
+
+        input.inline-input, span.prefix {
+            border: none;
+        }
+
+        input.inline-input:focus {
+            outline: none;
+        }
+
+        div.input-container {
+            /*border: solid 1px #ccc;*/
+            background-color: white;
+            padding-top: .5rem;
+        }
+
+        div.example label {
+            padding: 0;
+            margin-bottom: 0;
+        }
+
+        div.event-container, div.event-container input, div.question-toggle-container {
+            color: #777;
+        }
+
+        ul.sublist li {
+            color: black;
+        }
+
+        li.emphasize {
+            font-weight: bold;
+        }
+
+        #mturk_form div.question {
+            margin: 4rem 0 6rem;
+        }
+
+        textarea.inline-input {
+            width: 100%;
+            outline: none;
+            border: none;
+            padding: 0;
+        }
+
+        div.event-container {
+            padding-top: 0;
+        }
+
+        div.event-container .input-container {
+            padding-right: 30px;
+        }
+
+        div.event-container textarea {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+        div.textarea-container {
+            padding-left: 0;
+        }
+
+        div.example .input-container {
+            padding-top: 0;
+        }
+
+        div.example .row {
+            padding: .25rem 0;
+        }
+
+        div.example .reason-container {
+            font-style: italic;
+            margin-top: 2rem;
+            color: #777;
+        }
+
+        .example div.event-container, .example div.event-container input {
+            color: inherit;
+        }
+
+        span.highlight {
+            font-weight: bold;
+            font-style: italic;
+            text-decoration: underline;
+        }
+
+        li.level1 {
+            margin-top: 1.25rem;
+        }
+
         body {
             font-family: Arial, sans-serif;
             padding: 20px;
@@ -19,79 +242,212 @@
             border-radius: 5px;
         }
     </style>
+
+
 </head>
 
 
 <body>
 
-<h2>Evaluate Responses Based on a Given Question and Passage</h2>
+<!-- HIT START -->
+<div id="hit" class="container">
 
-<p><strong>Question:</strong> ${Question}</p>
-<p><strong>Passage (Document #${DocumentNumber}):</strong> ${Passage}</p>
-
-<div id="container">
-    <!-- Response 1 -->
-    <div class="response-container shuffleMe">
-        <p><strong>Response:</strong> ${Response1}</p>
-        Does the response answer the question?
-        <label><input type="radio" name="response1-answer" value="yes" required> Yes</label>
-        <label><input type="radio" name="response1-answer" value="no" required> No</label>
-        <br>
-        Does the response appropriately reference the source document?
-        <label><input type="radio" name="response1-reference" value="yes" required> Yes</label>
-        <label><input type="radio" name="response1-reference" value="no" required> No</label>
+    <h2>Evaluating Responses Based on a Given Question and Passage</h2>
+    <!-- ACCORDION HEADER START -->
+    <div class="accordion col-10 offset-1" id="hitinfo">
+        <!-- INSTRUCTIONS START -->
+        <div class="card">
+            <div class="card-header id=" instructionsHeading
+            ">
+            <h5 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#instructions"
+                        aria-expanded="true" aria-controls="instructions">
+                    Instructions (click to expand)
+                </button>
+            </h5>
+        </div>
+        <div class="collapse show" id="instructions" aria-labelledby="instructionsHeading" data-parent="#hitinfo">
+            <div class="card-body">
+                <h5><b>Overview</b></h5>
+                <p>Thanks for participating in this HIT!</p>
+                <p>For this task,  .....</p>
+<!--                <h5><b>Guidelines</b></h5>-->
+<!--                <ul>-->
+<!--                    <li class="good"><b>Use present tense.</b></li>-->
+<!--                    <li class="good"><b>Use actions.</b></li>-->
+<!--                    <li class="good"><b>Be specific (see examples).</b></li>-->
+<!--                    <li class="bad"><b>Do not use wants, feelings, emotions (see examples).</b></li>-->
+<!--                    <li class="bad"><b>Do not use passive statements (see examples).</b></li>-->
+<!--                </ul>-->
+            </div>
+        </div>
     </div>
+    <!-- INSTRUCTIONS END -->
 
-    <!-- Response 2 -->
-    <div class="response-container shuffleMe">
-        <p><strong>Response:</strong> ${Response2}</p>
-        Does the response answer the question?
-        <label><input type="radio" name="response2-answer" value="yes" required> Yes</label>
-        <label><input type="radio" name="response2-answer" value="no" required> No</label>
-        <br>
-        Does the response appropriately reference the source document?
-        <label><input type="radio" name="response2-reference" value="yes" required> Yes</label>
-        <label><input type="radio" name="response2-reference" value="no" required> No</label>
+    <!-- EXAMPLES START -->
+    <div class="card">
+        <div class="card-header id=" examplesHeading
+        ">
+        <h5 class="mb-0">
+            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#examples"
+                    aria-expanded="true" aria-controls="examples">
+                Examples (click to expand)
+            </button>
+        </h5>
     </div>
+    <div class="collapse" id="examples" aria-labelledby="examplesHeading" data-parent="#hitinfo">
+        <div class="card-body">
 
-    <!-- Response 3 -->
-    <div class="response-container shuffleMe">
-        <p><strong>Response:</strong> ${Response3}</p>
-        Does the response answer the question?
-        <label><input type="radio" name="response3-answer" value="yes" required> Yes</label>
-        <label><input type="radio" name="response3-answer" value="no" required> No</label>
-        <br>
-        Does the response appropriately reference the source document?
-        <label><input type="radio" name="response3-reference" value="yes" required> Yes</label>
-        <label><input type="radio" name="response3-reference" value="no" required> No</label>
-    </div>
 
-    <!-- Response 4 -->
-    <div class="response-container shuffleMe">
-        <p><strong>Response:</strong> ${Response4}</p>
-        Does the response answer the question?
-        <label><input type="radio" name="response4-answer" value="yes" required> Yes</label>
-        <label><input type="radio" name="response4-answer" value="no" required> No</label>
-        <br>
-        Does the response appropriately reference the source document?
-        <label><input type="radio" name="response4-reference" value="yes" required> Yes</label>
-        <label><input type="radio" name="response4-reference" value="no" required> No</label>
-    </div>
+            <!-- EXAMPLE START -->
+            <div class="question example">
+<!--                <div class="prompt row">-->
+<!--                    <div class="q-num col-1"></div>-->
+<!--                    <div class="col-11">What did PersonX do before/after?</div>-->
+<!--                </div>-->
+<!--                <div class="col-11 offset-1 mt-4 pl-4 good">-->
+<!--                    <div class="before-container row">-->
+<!--                        <label class="col-2">Before:</label>-->
+<!--                        <div class="col-10 input-container">-->
+<!--                            <div class="textarea-container">-->
+<!--                                PersonX invites PersonY to a coffee shop.-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="event-container row">-->
+<!--                        <label class="col-2">Event:</label>-->
+<!--                        <div class="col-10 input-container">-->
+<!--                            <div class="col-12 textarea-container">PersonX buys PersonY coffee.</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="after-container row">-->
+<!--                        <label class="col-2">After:</label>-->
+<!--                        <div class="col-10 input-container">-->
+<!--                            <div class="textarea-container">-->
+<!--                                PersonX asks PersonY to sit down at a table.-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="reason-container row">-->
+<!--                        <label class="col-2">Reason:</label>-->
+<!--                        <div class="col-6 input-container">-->
+<!--                            Both before and after events are specific, detailed actions.-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+            <!-- QUESTION END -->
 
-    <!-- Response 5 -->
-    <div class="response-container shuffleMe">
-        <p><strong>Response:</strong> ${Response5}</p>
-        Does the response answer the question?
-        <label><input type="radio" name="response5-answer" value="yes" required> Yes</label>
-        <label><input type="radio" name="response5-answer" value="no" required> No</label>
-        <br>
-        Does the response appropriately reference the source document?
-        <label><input type="radio" name="response5-reference" value="yes" required> Yes</label>
-        <label><input type="radio" name="response5-reference" value="no" required> No</label>
+
+            <div class="question example"></div>
+            <div class="question example"></div>
+            <div class="question example"></div>
+
+        </div>
     </div>
 </div>
+<!-- EXAMPLES END -->
 
-<button type="submit">Submit</button>
+</div>
+<!-- ACCORDION HEADER END -->
+
+<!-- MTURK INPUT START -->
+<div class="col-10 offset-1 mt-3">
+    <form name='mturk_form' method='post' id='mturk_form' autocomplete="off">
+        <input type='hidden' value='' name='assignmentId' id='assignmentId'/>
+
+        <p>Now given the following question and context, rate the provided responses.</p>
+
+        <p><strong>Question:</strong> ${Question}</p>
+        <p><strong>Passage (Document #${DocumentNumber}):</strong> ${Passage}</p>
+
+        <div id="container">
+            <!-- Response 1 -->
+            <div class="response-container shuffleMe">
+                <p><strong>Response:</strong> ${Response1}</p>
+                Does the response answer the question?
+                <label><input type="radio" name="response1-answer" value="yes" required> Yes</label>
+                <label><input type="radio" name="response1-answer" value="no" required> No</label>
+                <br>
+                Does the response appropriately reference the source document?
+                <label><input type="radio" name="response1-reference" value="yes" required> Yes</label>
+                <label><input type="radio" name="response1-reference" value="no" required> No</label>
+            </div>
+
+            <!-- Response 2 -->
+            <div class="response-container shuffleMe">
+                <p><strong>Response:</strong> ${Response2}</p>
+                Does the response answer the question?
+                <label><input type="radio" name="response2-answer" value="yes" required> Yes</label>
+                <label><input type="radio" name="response2-answer" value="no" required> No</label>
+                <br>
+                Does the response appropriately reference the source document?
+                <label><input type="radio" name="response2-reference" value="yes" required> Yes</label>
+                <label><input type="radio" name="response2-reference" value="no" required> No</label>
+            </div>
+
+            <!-- Response 3 -->
+            <div class="response-container shuffleMe">
+                <p><strong>Response:</strong> ${Response3}</p>
+                Does the response answer the question?
+                <label><input type="radio" name="response3-answer" value="yes" required> Yes</label>
+                <label><input type="radio" name="response3-answer" value="no" required> No</label>
+                <br>
+                Does the response appropriately reference the source document?
+                <label><input type="radio" name="response3-reference" value="yes" required> Yes</label>
+                <label><input type="radio" name="response3-reference" value="no" required> No</label>
+            </div>
+
+            <!-- Response 4 -->
+            <div class="response-container shuffleMe">
+                <p><strong>Response:</strong> ${Response4}</p>
+                Does the response answer the question?
+                <label><input type="radio" name="response4-answer" value="yes" required> Yes</label>
+                <label><input type="radio" name="response4-answer" value="no" required> No</label>
+                <br>
+                Does the response appropriately reference the source document?
+                <label><input type="radio" name="response4-reference" value="yes" required> Yes</label>
+                <label><input type="radio" name="response4-reference" value="no" required> No</label>
+            </div>
+
+            <!-- Response 5 -->
+            <div class="response-container shuffleMe">
+                <p><strong>Response:</strong> ${Response5}</p>
+                Does the response answer the question?
+                <label><input type="radio" name="response5-answer" value="yes" required> Yes</label>
+                <label><input type="radio" name="response5-answer" value="no" required> No</label>
+                <br>
+                Does the response appropriately reference the source document?
+                <label><input type="radio" name="response5-reference" value="yes" required> Yes</label>
+                <label><input type="radio" name="response5-reference" value="no" required> No</label>
+            </div>
+        </div>
+
+        <!-- OPTIONAL FEEDBACK -->
+        <div class="row mt-5">
+            <div class="col-8 offset-2">
+                <p>(Optional) Please let us know if anything was unclear, if you experienced any issues, or if you have
+                    any other fedback for us.</p>
+                <textarea id="feedback" name="feedback" rows=3></textarea>
+            </div>
+        </div>
+
+        <!-- SUBMIT BUTTON -->
+        <div class="row mt-5">
+            <div class="col-2 offset-5">
+                <input id="submitButton" onclick="getnext()" type="submit" value="Submit">
+            </div>
+        </div>
+<!--        <button type="submit">Submit</button>-->
+    </form>
+    <script language='Javascript'>turkSetAssignmentID();</script>
+</div>
+<!-- MTURK INPUT END -->
+
+
+
+
+
 
 <script>
     function shuffleArray(array) {
@@ -113,6 +469,89 @@
     elementsArray.forEach(function (element) {
         container.appendChild(element);
     })
+</script>
+
+<!-- BOOSTRAP JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+<!-- HITPUB JS -->
+<script id="hitpub_js">
+    // radio toggle collapse function
+    function addToggleListener(targetId, toggleId) {
+        var targetElement = document.getElementById(targetId);
+        var targetCollapse = $("#" + targetId);
+        var toggleElement = document.getElementById(toggleId);
+        toggleElement.addEventListener("click", function () {
+            var toggleInputs = targetElement.getElementsByClassName("inline-input enabled");
+            if (targetElement.classList.contains("show")) {
+                console.log('hide')
+                targetCollapse.collapse('toggle');
+                // add required attribute to fields
+                for (var i = 0; i < toggleInputs.length; i++) {
+                    toggleInputs[i].required = false;
+                }
+            } else {
+                console.log('show')
+                targetCollapse.collapse('toggle');
+                // add required attribute to fields
+                for (var i = 0; i < toggleInputs.length; i++) {
+                    toggleInputs[i].required = true;
+                }
+            }
+        });
+    }
+
+    // add toggle listener to question elements
+    for (var i = 1; i < 4; i++) {
+        var containerId = "sequence-container" + String(i);
+        var toggleId = "toggle-question" + String(i);
+        addToggleListener(containerId, toggleId);
+    }
+
+    // automatically resize textarea fields based on content
+    var autoExpand = function (field) {
+        // Reset field height
+        field.style.height = 'inherit';
+        // Get the computed styles for the element
+        var computed = window.getComputedStyle(field);
+        // Calculate the height
+        var height = parseInt(computed.getPropertyValue('border-top-width'), 10)
+            + parseInt(computed.getPropertyValue('padding-top'), 10)
+            + field.scrollHeight
+            + parseInt(computed.getPropertyValue('padding-bottom'), 10)
+            + parseInt(computed.getPropertyValue('border-bottom-width'), 10);
+
+        field.style.height = height + 'px';
+    };
+    // add autoExpand listeners to textarea inputs
+    document.addEventListener('input', function (event) {
+        if (event.target.tagName.toLowerCase() !== 'textarea') return;
+        autoExpand(event.target);
+    }, false);
+
+    // autoExpand inputs on document load
+    document.addEventListener('DOMContentLoaded', function (event) {
+        inputs = document.getElementsByTagName('textarea');
+        for (var i = 1; i < inputs.length; i++) {
+            autoExpand(inputs[i]);
+        }
+    })
+
+    // prevent submit on enter key
+    document.getElementById("mturk_form").onkeypress = function (e) {
+        var key = e.charCode || e.keyCode || 0;
+        if (key == 13) {
+            e.preventDefault();
+        }
+    }
 </script>
 
 </body>
