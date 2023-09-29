@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Evaluate Responses Based on a Given Question and Passage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .response-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+
+<body>
+
+<h2>Evaluate Responses Based on a Given Question and Passage</h2>
+
+<p><strong>Question:</strong> ${Question}</p>
+<p><strong>Passage (Document #${DocumentNumber}):</strong> ${Passage}</p>
+
+<div id="container">
+    <!-- Response 1 -->
+    <div class="response-container shuffleMe">
+        <p><strong>Response:</strong> ${Response1}</p>
+        Does the response answer the question?
+        <label><input type="radio" name="response1-answer" value="yes" required> Yes</label>
+        <label><input type="radio" name="response1-answer" value="no" required> No</label>
+        <br>
+        Does the response appropriately reference the source document?
+        <label><input type="radio" name="response1-reference" value="yes" required> Yes</label>
+        <label><input type="radio" name="response1-reference" value="no" required> No</label>
+    </div>
+
+    <!-- Response 2 -->
+    <div class="response-container shuffleMe">
+        <p><strong>Response:</strong> ${Response2}</p>
+        Does the response answer the question?
+        <label><input type="radio" name="response2-answer" value="yes" required> Yes</label>
+        <label><input type="radio" name="response2-answer" value="no" required> No</label>
+        <br>
+        Does the response appropriately reference the source document?
+        <label><input type="radio" name="response2-reference" value="yes" required> Yes</label>
+        <label><input type="radio" name="response2-reference" value="no" required> No</label>
+    </div>
+
+    <!-- Response 3 -->
+    <div class="response-container shuffleMe">
+        <p><strong>Response:</strong> ${Response3}</p>
+        Does the response answer the question?
+        <label><input type="radio" name="response3-answer" value="yes" required> Yes</label>
+        <label><input type="radio" name="response3-answer" value="no" required> No</label>
+        <br>
+        Does the response appropriately reference the source document?
+        <label><input type="radio" name="response3-reference" value="yes" required> Yes</label>
+        <label><input type="radio" name="response3-reference" value="no" required> No</label>
+    </div>
+
+    <!-- Response 4 -->
+    <div class="response-container shuffleMe">
+        <p><strong>Response:</strong> ${Response4}</p>
+        Does the response answer the question?
+        <label><input type="radio" name="response4-answer" value="yes" required> Yes</label>
+        <label><input type="radio" name="response4-answer" value="no" required> No</label>
+        <br>
+        Does the response appropriately reference the source document?
+        <label><input type="radio" name="response4-reference" value="yes" required> Yes</label>
+        <label><input type="radio" name="response4-reference" value="no" required> No</label>
+    </div>
+
+    <!-- Response 5 -->
+    <div class="response-container shuffleMe">
+        <p><strong>Response:</strong> ${Response5}</p>
+        Does the response answer the question?
+        <label><input type="radio" name="response5-answer" value="yes" required> Yes</label>
+        <label><input type="radio" name="response5-answer" value="no" required> No</label>
+        <br>
+        Does the response appropriately reference the source document?
+        <label><input type="radio" name="response5-reference" value="yes" required> Yes</label>
+        <label><input type="radio" name="response5-reference" value="no" required> No</label>
+    </div>
+</div>
+
+<button type="submit">Submit</button>
+
+<script>
+    function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+            var j = Math.floor(Math.random() * (i + 1));
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+        return array;
+    }
+
+    var container = document.getElementById("container");
+    var elementsArray = Array.prototype.slice.call(container.getElementsByClassName('shuffleMe'));
+    elementsArray.forEach(function (element) {
+        container.removeChild(element);
+    })
+    shuffleArray(elementsArray);
+    elementsArray.forEach(function (element) {
+        container.appendChild(element);
+    })
+</script>
+
+</body>
+
+</html>
