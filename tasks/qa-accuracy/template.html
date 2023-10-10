@@ -270,12 +270,13 @@
             <div class="card-body">
                 <h5><b>Overview</b></h5>
                 <p>Thanks for participating in this HIT!</p>
-                <p>For this task, you will evaluate various responses to several questions.</p>
+                <p>For this task, you will evaluate the answerability of several questions and possible corresponding answers.</p>
                 <h5><b>Guidelines</b></h5>
                 <ul>
-                    <li>Carefully read each question and set of responses.</li>
+                    <li>Carefully read each question and set of answers.</li>
                     <li>Some of the questions may not make sense without additional context, or may be nonsensical.</li>
-                    <li>An answer is correct if it reasonably answers the question.</li>
+                    <li>A question should be considered <em>reasonably answerable</em> if it can be answered using common knowledge or via a basic internet searches (e.g. google, wikipedia, etc.).</li>
+                    <li>An answer is correct if it answers the question AND the question is answerable.</li>
                     <li>Some, all, or none of the answers may be correct.</li>
                 </ul>
             </div>
@@ -302,7 +303,12 @@
             <div class="question example">
                 <p>Here is an example question and candidate answers.</p>
                 <p><strong>Question:</strong> What is something that can fly?</p>
-                <div id="container">
+                Is this question reasonably answerable?
+                <label><input type="radio" name="questionEx" value="yes" required checked> Yes</label>
+                <label><input type="radio" name="questionEx" value="no" required> No</label>
+                <label><input type="radio" name="questionEx" value="need-context" required> Not Enough Context</label>
+
+                <!-- <div id="container"> -->
                     <!-- Response 1 -->
                     <div class="response-container shuffleResponse">
                         <p><strong>Response:</strong> Turtles can fly.</p>
@@ -310,7 +316,6 @@
                         <label><input type="radio" name="responseEx1-answer" value="yes" required> Yes</label>
                         <label><input type="radio" name="responseEx1-answer" value="no" required checked> No</label>
                         <label><input type="radio" name="responseEx1-answer" value="need-context" required> Not Enough Context</label>
-                        <br><br><em>The correct answer is no as turtles can not fly.</em>
                     </div>
 
                     <!-- Response 2 -->
@@ -320,17 +325,15 @@
                         <label><input type="radio" name="responseEx2-answer" value="yes" required> Yes</label>
                         <label><input type="radio" name="responseEx2-answer" value="no" required checked> No</label>
                         <label><input type="radio" name="responseEx2-answer" value="need-context" required> Not Enough Context</label>
-                        <br><br><em>The correct answer is no as goldfish can not fly.</em>
                     </div>
 
                     <!-- Response 3 -->
                     <div class="response-container shuffleResponse">
-                        <p><strong>Response:</strong> Airplanes can fly.</p>
+                        <p><strong>Response:</strong> Airplanes sometimes fly.</p>
                         Does the response answer the question?
                         <label><input type="radio" name="responseEx3-answer" value="yes" required checked> Yes</label>
                         <label><input type="radio" name="responseEx3-answer" value="no" required> No</label>
                         <label><input type="radio" name="responseEx3-answer" value="need-context" required> Not Enough Context</label>
-                        <br><br><em>The correct answer is yes as airplanes can fly.</em>
                     </div>
 
                     <!-- Response 4 -->
@@ -340,19 +343,17 @@
                         <label><input type="radio" name="responseEx4-answer" value="yes" required> Yes</label>
                         <label><input type="radio" name="responseEx4-answer" value="no" required> No</label>
                         <label><input type="radio" name="responseEx4-answer" value="need-context" required checked> Not Enough Context</label>
-                        <br><br><em>The correct answer is not enough context as a sheet of paper can fly if made into a paper airplane, but will generally not be able to fly.</em>
                     </div>
 
                     <!-- Response 5 -->
                     <div class="response-container shuffleResponse">
-                        <p><strong>Response:</strong> Birds like blue jays can fly.</p>
+                        <p><strong>Response:</strong> Birds like Blue Jays can fly.</p>
                         Does the response answer the question?
                         <label><input type="radio" name="responseEx5-answer" value="yes" required checked> Yes</label>
                         <label><input type="radio" name="responseEx5-answer" value="no" required> No</label>
                         <label><input type="radio" name="responseEx5-answer" value="need-context" required> Not Enough Context</label>
-                        <br><br><em>The correct answer is yes as blue jays can fly.</em>
                     </div>
-                </div>
+                <!-- </div> -->
             </div>
             <!-- QUESTION END -->
 
@@ -375,7 +376,7 @@
             <!-- Question 1 -->
             <div class="shuffleQuestion">
                 <p><strong>Question:</strong> ${Question1}</p>        
-                <div id="container">
+                <div id="containerR1">
                     <!-- Response 1 -->
                     <div class="response-container shuffleResponse">
                         <p><strong>Response:</strong> ${Response1}</p>
@@ -426,8 +427,13 @@
 
             <!-- Question 2 -->
             <div class="shuffleQuestion">
-                <p><strong>Question:</strong> ${Question2}</p>        
-                <div id="container">
+                <p><strong>Question:</strong> ${Question2}</p>
+                Is this question reasonably answerable?
+                <label><input type="radio" name="question2" value="yes" required> Yes</label>
+                <label><input type="radio" name="question2" value="no" required> No</label>
+                <label><input type="radio" name="question2" value="need-context" required> Not Enough Context</label>
+        
+                <div id="containerR2">
                     <!-- Response 1 -->
                     <div class="response-container shuffleResponse">
                         <p><strong>Response:</strong> ${Response1}</p>
@@ -479,8 +485,13 @@
 
             <!-- Question 3 -->
             <div class="shuffleQuestion">
-                <p><strong>Question:</strong> ${Question3}</p>        
-                <div id="container">
+                <p><strong>Question:</strong> ${Question3}</p>
+                Is this question reasonably answerable?
+                <label><input type="radio" name="question3" value="yes" required> Yes</label>
+                <label><input type="radio" name="question3" value="no" required> No</label>
+                <label><input type="radio" name="question3" value="need-context" required> Not Enough Context</label>
+        
+                <div id="containerR3">
                     <!-- Response 1 -->
                     <div class="response-container shuffleResponse">
                         <p><strong>Response:</strong> ${Response1}</p>
@@ -533,7 +544,7 @@
         <div class="row mt-5">
             <div class="col-8 offset-2">
                 <p>(Optional) Please let us know if anything was unclear, if you experienced any issues, or if you have
-                    any other feedback for us.</p>
+                    any other fedback for us.</p>
                 <textarea id="feedback" name="feedback" rows=3></textarea>
             </div>
         </div>
@@ -568,6 +579,8 @@
         return array;
     }
 
+
+
     var container = document.getElementById("container");
     var elementsArray = Array.prototype.slice.call(container.getElementsByClassName('shuffleQuestion'));
     elementsArray.forEach(function (element) {
@@ -577,6 +590,38 @@
     elementsArray.forEach(function (element) {
         container.appendChild(element);
     })
+
+        var container = document.getElementById("containerR1");
+    var elementsArray = Array.prototype.slice.call(container.getElementsByClassName('shuffleResponse'));
+    elementsArray.forEach(function (element) {
+        container.removeChild(element);
+    })
+    shuffleArray(elementsArray);
+    elementsArray.forEach(function (element) {
+        container.appendChild(element);
+    })
+
+            var container = document.getElementById("containerR2");
+    var elementsArray = Array.prototype.slice.call(container.getElementsByClassName('shuffleResponse'));
+    elementsArray.forEach(function (element) {
+        container.removeChild(element);
+    })
+    shuffleArray(elementsArray);
+    elementsArray.forEach(function (element) {
+        container.appendChild(element);
+    })
+
+                var container = document.getElementById("containerR3");
+    var elementsArray = Array.prototype.slice.call(container.getElementsByClassName('shuffleResponse'));
+    elementsArray.forEach(function (element) {
+        container.removeChild(element);
+    })
+    shuffleArray(elementsArray);
+    elementsArray.forEach(function (element) {
+        container.appendChild(element);
+    })
+
+
 </script>
 
 <!-- BOOSTRAP JS -->
